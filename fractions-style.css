@@ -104,10 +104,12 @@
   filter: brightness(0.88);
 }
 
-.cmp-btn:hover:not(:disabled) {
-  background: #4a90e2;
-  border-color: #4a90e2;
-  color: white;
+@media (hover: hover) {
+  .cmp-btn:hover:not(:disabled) {
+    background: #4a90e2;
+    border-color: #4a90e2;
+    color: white;
+  }
 }
 
 .cmp-btn.cmp-correct {

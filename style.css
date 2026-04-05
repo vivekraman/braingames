@@ -312,10 +312,18 @@ main {
   transition: all 0.15s;
 }
 
-.cat-btn:hover, .cat-btn:active {
+.cat-btn:active {
   background: #4a90e2;
   color: white;
   border-color: #4a90e2;
+}
+
+@media (hover: hover) {
+  .cat-btn:hover {
+    background: #4a90e2;
+    color: white;
+    border-color: #4a90e2;
+  }
 }
 
 .cat-btn .cat-emoji {
@@ -400,8 +408,10 @@ main {
   transition: filter 0.15s;
 }
 
-#btn-play-again:hover {
-  filter: brightness(1.1);
+@media (hover: hover) {
+  #btn-play-again:hover {
+    filter: brightness(1.1);
+  }
 }
 
 /* ── Shared utility ── */
@@ -439,16 +449,22 @@ main {
   transition: all 0.15s;
 }
 
-.game-pick-btn:hover, .game-pick-btn:active {
+.game-pick-btn:active {
   background: #4a90e2;
   border-color: #4a90e2;
   color: white;
-  transform: translateY(-1px);
+  transform: scale(0.98);
   box-shadow: 0 4px 16px rgba(74,144,226,0.35);
 }
 
-.game-pick-btn:active {
-  transform: scale(0.98);
+@media (hover: hover) {
+  .game-pick-btn:hover {
+    background: #4a90e2;
+    border-color: #4a90e2;
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(74,144,226,0.35);
+  }
 }
 
 .pick-emoji {
@@ -464,9 +480,12 @@ main {
   color: #334;
 }
 
-.game-pick-btn:hover .pick-label,
 .game-pick-btn:active .pick-label {
   color: white;
+}
+
+@media (hover: hover) {
+  .game-pick-btn:hover .pick-label { color: white; }
 }
 
 .pick-desc {
@@ -477,9 +496,12 @@ main {
   margin-top: 2px;
 }
 
-.game-pick-btn:hover .pick-desc,
 .game-pick-btn:active .pick-desc {
   color: rgba(255,255,255,0.85);
+}
+
+@media (hover: hover) {
+  .game-pick-btn:hover .pick-desc { color: rgba(255,255,255,0.85); }
 }
 
 /* ── Home button in header ── */
@@ -496,9 +518,11 @@ main {
   white-space: nowrap;
 }
 
-#btn-home:hover {
-  background: rgba(255,255,255,0.2);
-  color: white;
+@media (hover: hover) {
+  #btn-home:hover {
+    background: rgba(255,255,255,0.2);
+    color: white;
+  }
 }
 
 /* ── Win score line ── */

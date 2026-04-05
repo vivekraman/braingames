@@ -86,6 +86,7 @@ const timerEl = document.getElementById('timer');
 const categoryLabel = document.getElementById('category-label');
 const winOverlay = document.getElementById('win-overlay');
 const winTimeEl = document.getElementById('win-time');
+const winScoreEl = document.getElementById('win-score');
 const categoryModal = document.getElementById('category-modal');
 const categoryGridEl = document.getElementById('category-grid');
 
@@ -429,10 +430,11 @@ function checkWin() {
   }
 }
 
-function showWinScreen() {
+function showWinScreen(scoreText = '') {
   stopTimer();
   const elapsed = Date.now() - startTime;
   winTimeEl.textContent = `Time: ${formatTime(elapsed)}`;
+  winScoreEl.textContent = scoreText;
   winOverlay.classList.remove('hidden');
 }
 
@@ -507,7 +509,11 @@ function closeCategoryModal() {
 document.getElementById('btn-new').addEventListener('click', () => newGame(currentCategory));
 document.getElementById('btn-category').addEventListener('click', openCategoryModal);
 document.getElementById('btn-close-modal').addEventListener('click', closeCategoryModal);
-document.getElementById('btn-play-again').addEventListener('click', () => newGame(currentCategory));
+document.getElementById('btn-play-again').addEventListener('click', () => {
+  winOverlay.classList.add('hidden');
+  if (activeGame === 'fractions') fractionsNewGame();
+  else newGame(currentCategory);
+});
 
 // Close modal on backdrop click
 categoryModal.addEventListener('click', (e) => {
@@ -515,8 +521,53 @@ categoryModal.addEventListener('click', (e) => {
 });
 
 /* ══════════════════════════════════════════════
+   GAME HUB
+   ══════════════════════════════════════════════ */
+
+let activeGame = null; // null = on menu, 'wordsearch' | 'fractions'
+
+const menuEl = document.getElementById('game-menu');
+const gameWordSearchEl = document.getElementById('game-wordsearch');
+const gameFractionsEl = document.getElementById('game-fractions');
+const btnHomeEl = document.getElementById('btn-home');
+
+function showMenu() {
+  stopTimer();
+  winOverlay.classList.add('hidden');
+  menuEl.classList.remove('hidden');
+  gameWordSearchEl.classList.add('hidden');
+  gameFractionsEl.classList.add('hidden');
+  btnHomeEl.classList.add('hidden');
+  timerEl.classList.add('hidden');
+  document.body.classList.remove('theme-dark');
+  document.body.style.removeProperty('--color-bg');
+  bgLayer.innerHTML = '';
+  activeGame = null;
+}
+
+function switchToGame(gameKey) {
+  menuEl.classList.add('hidden');
+  btnHomeEl.classList.remove('hidden');
+  timerEl.classList.remove('hidden');
+  gameWordSearchEl.classList.toggle('hidden', gameKey !== 'wordsearch');
+  gameFractionsEl.classList.toggle('hidden', gameKey !== 'fractions');
+  activeGame = gameKey;
+  if (gameKey === 'wordsearch') {
+    newGame(currentCategory);
+  } else {
+    fractionsNewGame();
+  }
+}
+
+document.querySelectorAll('.game-pick-btn').forEach(btn => {
+  btn.addEventListener('click', () => switchToGame(btn.dataset.game));
+});
+
+btnHomeEl.addEventListener('click', showMenu);
+
+/* ══════════════════════════════════════════════
    INIT
    ══════════════════════════════════════════════ */
 
 buildCategoryButtons();
-newGame('animals');
+showMenu();

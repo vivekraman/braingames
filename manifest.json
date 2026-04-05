@@ -1,7 +1,7 @@
 {
-  "name": "Word Search",
-  "short_name": "Word Search",
-  "description": "A mobile word search game for kids",
+  "name": "Learning Games",
+  "short_name": "Games",
+  "description": "Word search and math games for kids",
   "start_url": "./",
   "display": "standalone",
   "orientation": "portrait",

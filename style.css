@@ -403,3 +403,106 @@ main {
 #btn-play-again:hover {
   filter: brightness(1.1);
 }
+
+/* ── Shared utility ── */
+.hidden { display: none !important; }
+
+/* ── Game menu ── */
+#game-menu {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 0;
+}
+
+#game-menu h2 {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #334;
+  text-align: center;
+}
+
+.game-pick-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 20px;
+  background: white;
+  border: 2px solid #c8ddf5;
+  border-radius: 16px;
+  cursor: pointer;
+  text-align: left;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: all 0.15s;
+}
+
+.game-pick-btn:hover, .game-pick-btn:active {
+  background: #4a90e2;
+  border-color: #4a90e2;
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(74,144,226,0.35);
+}
+
+.game-pick-btn:active {
+  transform: scale(0.98);
+}
+
+.pick-emoji {
+  font-size: 2.4rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.pick-label {
+  font-size: 1.15rem;
+  font-weight: 800;
+  display: block;
+  color: #334;
+}
+
+.game-pick-btn:hover .pick-label,
+.game-pick-btn:active .pick-label {
+  color: white;
+}
+
+.pick-desc {
+  font-size: 0.8rem;
+  color: #666;
+  font-weight: 500;
+  display: block;
+  margin-top: 2px;
+}
+
+.game-pick-btn:hover .pick-desc,
+.game-pick-btn:active .pick-desc {
+  color: rgba(255,255,255,0.85);
+}
+
+/* ── Home button in header ── */
+#btn-home {
+  padding: 6px 12px;
+  border: 2px solid rgba(255,255,255,0.5);
+  border-radius: 20px;
+  background: transparent;
+  color: rgba(255,255,255,0.9);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+#btn-home:hover {
+  background: rgba(255,255,255,0.2);
+  color: white;
+}
+
+/* ── Win score line ── */
+#win-score {
+  font-size: 1rem;
+  color: #666;
+}

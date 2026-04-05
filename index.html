@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <title>Word Search</title>
+  <title>Learning Games</title>
 
   <!-- Favicon -->
   <link rel="icon" href="favicon.ico" sizes="any">
@@ -15,34 +15,77 @@
   <!-- iOS homescreen -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Word Search">
+  <meta name="apple-mobile-web-app-title" content="Learning Games">
   <link rel="apple-touch-icon" href="icon-180.png">
 
   <!-- Theme color (browser chrome on Android) -->
   <meta name="theme-color" content="#5a64dc">
 
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="fractions-style.css">
 </head>
 <body>
 
   <div id="bg-layer"></div>
 
   <header>
-    <div id="category-label">Word Search</div>
-    <div id="timer">0:00</div>
+    <div id="header-title">Learning Games</div>
+    <button id="btn-home" class="hidden">🏠 Home</button>
+    <div id="timer" class="hidden">0:00</div>
   </header>
 
   <main>
-    <div id="grid-container"></div>
 
-    <section id="word-list-section">
-      <div id="word-list"></div>
-    </section>
-
-    <div id="controls">
-      <button id="btn-new">New Puzzle</button>
-      <button id="btn-category">Change Category</button>
+    <!-- Game selection menu -->
+    <div id="game-menu">
+      <h2>Choose a Game</h2>
+      <button class="game-pick-btn" data-game="wordsearch">
+        <span class="pick-emoji">🔤</span>
+        <div>
+          <span class="pick-label">Word Search</span>
+          <span class="pick-desc">Find hidden words in the grid</span>
+        </div>
+      </button>
+      <button class="game-pick-btn" data-game="fractions">
+        <span class="pick-emoji">½</span>
+        <div>
+          <span class="pick-label">Fractions</span>
+          <span class="pick-desc">Compare fractions: which is bigger?</span>
+        </div>
+      </button>
     </div>
+
+    <!-- Word Search game area -->
+    <div id="game-wordsearch" class="hidden">
+      <div id="category-label"></div>
+      <div id="grid-container"></div>
+
+      <section id="word-list-section">
+        <div id="word-list"></div>
+      </section>
+
+      <div id="controls">
+        <button id="btn-new">New Puzzle</button>
+        <button id="btn-category">Change Category</button>
+      </div>
+    </div>
+
+    <!-- Fractions game area -->
+    <div id="game-fractions" class="hidden">
+      <div id="fractions-progress"></div>
+      <div id="fractions-arena">
+        <div id="fraction-left" class="fraction-display"></div>
+        <div id="fraction-compare-result" class="compare-result">?</div>
+        <div id="fraction-right" class="fraction-display"></div>
+      </div>
+      <div id="fractions-buttons">
+        <button class="cmp-btn" data-answer="lt">&lt;</button>
+        <button class="cmp-btn" data-answer="eq">=</button>
+        <button class="cmp-btn" data-answer="gt">&gt;</button>
+      </div>
+      <div id="fractions-feedback" class="hidden"></div>
+    </div>
+
   </main>
 
   <!-- Category picker modal -->
@@ -60,12 +103,14 @@
       <div id="win-trophy">🏆</div>
       <h1 id="win-heading">You found all the words!</h1>
       <p id="win-time"></p>
+      <p id="win-score"></p>
       <button id="btn-play-again">Play Again</button>
     </div>
   </div>
 
   <script src="words.js"></script>
   <script src="script.js"></script>
+  <script src="fractions.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('./sw.js');

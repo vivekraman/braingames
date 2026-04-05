@@ -1,7 +1,7 @@
 /* ── Custom properties ── */
 :root {
-  --grid-size: 10;
-  --gap: 2px;
+  --grid-size: 12;
+  --gap: 1px;
   --cell-size: calc((100vw - 32px - (var(--grid-size) - 1) * var(--gap)) / var(--grid-size));
   --color-bg: #eef4fb;
   --color-header: #4a90e2;
@@ -151,7 +151,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: clamp(10px, calc(var(--cell-size) * 0.5), 18px);
+  font-size: clamp(11px, calc(var(--cell-size) * 0.62), 20px);
   font-weight: 700;
   color: #334;
   cursor: default;

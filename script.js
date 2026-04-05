@@ -2,7 +2,7 @@
    Word Search — Game Engine
    ──────────────────────────────────────────────── */
 
-const GRID_SIZE = 10;
+const GRID_SIZE = 12;
 const MIN_WORDS = 8;
 const MAX_WORDS = 12;
 const MAX_PLACE_ATTEMPTS = 200;

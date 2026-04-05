@@ -98,6 +98,7 @@ function renderFraction(container, frac) {
 }
 
 function renderQuestion() {
+  document.activeElement?.blur();
   const pair = fracPairs[fracIndex];
 
   renderFraction(document.getElementById('fraction-left'),  pair.left);

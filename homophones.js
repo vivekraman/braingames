@@ -118,6 +118,7 @@ function renderSentence(sentence) {
 }
 
 function renderHomoQuestion() {
+  document.activeElement?.blur();
   const pair = homoPairs[homoIndex];
 
   renderSentence(pair.sentence);

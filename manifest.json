@@ -1,7 +1,7 @@
 {
-  "name": "Learning Games",
-  "short_name": "Games",
-  "description": "Word search and math games for kids",
+  "name": "Brain Games",
+  "short_name": "Brain Games",
+  "description": "Word search and brain games for kids",
   "start_url": "./",
   "display": "standalone",
   "orientation": "portrait",

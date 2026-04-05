@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <title>Learning Games</title>
+  <title>Brain Games</title>
 
   <!-- Favicon -->
   <link rel="icon" href="favicon.ico" sizes="any">
@@ -15,7 +15,7 @@
   <!-- iOS homescreen -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Learning Games">
+  <meta name="apple-mobile-web-app-title" content="Brain Games">
   <link rel="apple-touch-icon" href="icon-180.png">
 
   <!-- Theme color (browser chrome on Android) -->
@@ -30,7 +30,7 @@
   <div id="bg-layer"></div>
 
   <header>
-    <div id="header-title">Learning Games</div>
+    <div id="header-title">Brain Games</div>
     <button id="btn-home" class="hidden">🏠 Home</button>
     <div id="timer" class="hidden">0:00</div>
   </header>
@@ -135,7 +135,7 @@
   <script src="homophones.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./sw.js');
+      navigator.serviceWorker.register('./sw.js', { updateViaCache: 'none' });
     }
   </script>
 </body>

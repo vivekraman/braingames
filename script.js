@@ -512,8 +512,9 @@ document.getElementById('btn-category').addEventListener('click', openCategoryMo
 document.getElementById('btn-close-modal').addEventListener('click', closeCategoryModal);
 document.getElementById('btn-play-again').addEventListener('click', () => {
   winOverlay.classList.add('hidden');
-  if (activeGame === 'fractions') fractionsNewGame();
-  else newGame(currentCategory);
+  if (activeGame === 'fractions')       fractionsNewGame();
+  else if (activeGame === 'homophones') homophonesNewGame();
+  else                                  newGame(currentCategory);
 });
 
 // Close modal on backdrop click

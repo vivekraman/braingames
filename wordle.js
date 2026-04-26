@@ -80,6 +80,7 @@ function wordleHandleKey(key) {
     if (wordleInput.length > 0) {
       wordleInput = wordleInput.slice(0, -1);
       wordleUpdateRow();
+      wordleSaveState();
     }
     return;
   }
@@ -99,6 +100,7 @@ function wordleHandleKey(key) {
       void tile.offsetWidth; // reflow to restart animation
       tile.classList.add('pop');
     }
+    wordleSaveState();
   }
 }
 
@@ -204,10 +206,14 @@ function wordleSubmit() {
 
     if (scores.every(s => s === 'correct')) {
       wordleGameOver = true;
+      wordleSaveState();
       wordleBounceRow(row, () => wordleShowResult(true));
     } else if (wordleGuesses.length >= WORDLE_ROWS) {
       wordleGameOver = true;
+      wordleSaveState();
       setTimeout(() => wordleShowResult(false), 300);
+    } else {
+      wordleSaveState();
     }
   });
 }
@@ -276,28 +282,95 @@ function wordleShowResult(won) {
   }
 
   wResultEl.className = won ? 'wordle-result win' : 'wordle-result loss';
-  document.getElementById('wordle-again').addEventListener('click', wordleNewGame);
+  document.getElementById('wordle-again').addEventListener('click', wordleStartNewGame);
+}
+
+/* ══════════════════════════════════════════════
+   STATE PERSISTENCE
+   ══════════════════════════════════════════════ */
+
+function wordleSaveState() {
+  localStorage.setItem('braingames_wordle', JSON.stringify({
+    answer: wordleAnswer,
+    guesses: wordleGuesses,
+    input: wordleInput,
+    gameOver: wordleGameOver,
+    keyStates: wordleKeyStates
+  }));
+}
+
+function wordleLoadState() {
+  try {
+    const raw = localStorage.getItem('braingames_wordle');
+    return raw ? JSON.parse(raw) : null;
+  } catch { return null; }
+}
+
+function wordleClearState() {
+  localStorage.removeItem('braingames_wordle');
 }
 
 /* ══════════════════════════════════════════════
    GAME LIFECYCLE
    ══════════════════════════════════════════════ */
 
+function wordleRestoreBoard() {
+  wordleRenderBoard();
+
+  for (let row = 0; row < wordleGuesses.length; row++) {
+    const guess = wordleGuesses[row];
+    const scores = wordleScore(guess, wordleAnswer);
+    for (let col = 0; col < WORDLE_COLS; col++) {
+      const tile = wTile(row, col);
+      tile.textContent = guess[col];
+      tile.classList.add(scores[col]);
+    }
+  }
+
+  if (!wordleGameOver) {
+    for (let col = 0; col < wordleInput.length; col++) {
+      const tile = wTile(wordleGuesses.length, col);
+      tile.textContent = wordleInput[col];
+      tile.classList.add('filled');
+    }
+  }
+}
+
 function wordleNewGame() {
-  // Cache DOM refs on first call
   wBoardEl    = document.getElementById('wordle-board');
   wResultEl   = document.getElementById('wordle-result');
   wKeyboardEl = document.getElementById('wordle-keyboard');
 
-  // Reset state
+  const saved = wordleLoadState();
+  if (saved) {
+    wordleAnswer    = saved.answer;
+    wordleGuesses   = saved.guesses;
+    wordleInput     = saved.input || '';
+    wordleGameOver  = saved.gameOver;
+    wordleKeyStates = saved.keyStates;
+    wordleRestoreBoard();
+    wordleRenderKeyboard();
+    if (wordleGameOver) {
+      const last = wordleGuesses[wordleGuesses.length - 1];
+      const won = last && wordleScore(last, wordleAnswer).every(s => s === 'correct');
+      wordleShowResult(!!won);
+    } else {
+      startTimer();
+    }
+  } else {
+    wordleStartNewGame();
+  }
+}
+
+function wordleStartNewGame() {
+  wordleClearState();
   const answers = window.WORDLE_ANSWERS;
-  wordleAnswer   = answers[Math.floor(Math.random() * answers.length)];
-  wordleGuesses  = [];
-  wordleInput    = '';
-  wordleGameOver = false;
+  wordleAnswer    = answers[Math.floor(Math.random() * answers.length)];
+  wordleGuesses   = [];
+  wordleInput     = '';
+  wordleGameOver  = false;
   wordleKeyStates = {};
 
-  // Render
   wordleRenderBoard();
   wordleRenderKeyboard();
   wResultEl.className = 'wordle-result hidden';
@@ -315,4 +388,10 @@ document.addEventListener('keydown', (e) => {
   // Ignore modifier combos
   if (e.ctrlKey || e.metaKey || e.altKey) return;
   wordleHandleKey(e.key);
+});
+
+document.getElementById('btn-wordle-new').addEventListener('click', () => {
+  const inProgress = wordleGuesses.length > 0 || wordleInput.length > 0;
+  if (inProgress && !confirm('Start a new game? Your current progress will be lost.')) return;
+  wordleStartNewGame();
 });

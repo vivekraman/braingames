@@ -244,3 +244,28 @@
   background: #787c7e;
   color: white;
 }
+
+/* ── New Game controls ── */
+#wordle-controls {
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+#btn-wordle-new {
+  padding: 10px 28px;
+  border: none;
+  border-radius: 8px;
+  background: var(--color-btn-secondary, #5a64dc);
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  transition: filter 0.15s, transform 0.1s;
+}
+
+#btn-wordle-new:active {
+  transform: scale(0.97);
+  filter: brightness(0.9);
+}

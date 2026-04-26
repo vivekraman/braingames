@@ -312,6 +312,7 @@ function markWordFound(word) {
   }
   const chip = wordListEl.querySelector(`[data-word="${word}"]`);
   if (chip) chip.classList.add('found');
+  saveWordSearchState();
 }
 
 function flashMiss(cells) {
@@ -426,6 +427,7 @@ function validateSelection() {
 
 function checkWin() {
   if (foundWords.size === Object.keys(placedWords).length) {
+    clearWordSearchState();
     setTimeout(showWinScreen, 350);
   }
 }
@@ -457,7 +459,68 @@ function formatTime(ms) {
   return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
 }
 
+function saveWordSearchState() {
+  localStorage.setItem('braingames_wordsearch', JSON.stringify({
+    category: currentCategory,
+    grid: grid,
+    placedWords: placedWords,
+    foundWords: Array.from(foundWords),
+    foundCells: Array.from(foundCells)
+  }));
+}
+
+function loadWordSearchState() {
+  try {
+    const raw = localStorage.getItem('braingames_wordsearch');
+    return raw ? JSON.parse(raw) : null;
+  } catch { return null; }
+}
+
+function clearWordSearchState() {
+  localStorage.removeItem('braingames_wordsearch');
+}
+
+function restoreWordSearchState(saved) {
+  currentCategory = saved.category;
+  grid = saved.grid;
+  placedWords = saved.placedWords;
+  foundWords = new Set(saved.foundWords);
+  foundCells = new Set(saved.foundCells);
+  currentHighlight = new Set();
+  isSelecting = false;
+
+  const cat = WORD_BANK[currentCategory];
+  categoryLabel.textContent = `${cat.emoji} ${cat.label}`;
+
+  renderGrid();
+  renderWordList();
+  renderBackground(currentCategory);
+
+  for (const key of foundCells) {
+    const [row, col] = key.split(',').map(Number);
+    const el = getCellEl(row, col);
+    if (el) el.classList.add('found');
+  }
+  for (const word of foundWords) {
+    const chip = wordListEl.querySelector(`[data-word="${word}"]`);
+    if (chip) chip.classList.add('found');
+  }
+
+  winOverlay.classList.add('hidden');
+  startTimer();
+}
+
+function tryRestoreWordSearch() {
+  const saved = loadWordSearchState();
+  if (saved) {
+    restoreWordSearchState(saved);
+  } else {
+    newGame(currentCategory);
+  }
+}
+
 function newGame(category) {
+  clearWordSearchState();
   currentCategory = category;
   foundWords = new Set();
   foundCells = new Set();
@@ -475,6 +538,7 @@ function newGame(category) {
   document.getElementById('win-heading').textContent = 'You found all the words!';
   winOverlay.classList.add('hidden');
   startTimer();
+  saveWordSearchState();
 }
 
 /* ══════════════════════════════════════════════
@@ -560,7 +624,7 @@ function switchToGame(gameKey) {
   gameHomophonesEl.classList.toggle('hidden',  gameKey !== 'homophones');
   gameWordleEl.classList.toggle('hidden',      gameKey !== 'wordle');
   activeGame = gameKey;
-  if (gameKey === 'wordsearch')       newGame(currentCategory);
+  if (gameKey === 'wordsearch')       tryRestoreWordSearch();
   else if (gameKey === 'homophones')  homophonesNewGame();
   else if (gameKey === 'wordle')      wordleNewGame();
   else                                fractionsNewGame();

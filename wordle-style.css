@@ -1,6 +1,7 @@
 /* ── Wordle Game Styles ── */
 
 #game-wordle {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -254,29 +255,29 @@
   color: white;
 }
 
-/* ── New Game controls ── */
-#wordle-controls {
-  display: flex;
-  justify-content: center;
-  margin-top: 8px;
-}
-
+/* ── New Game icon (top-right corner) ── */
 #btn-wordle-new {
-  padding: 5px 14px;
+  position: absolute;
+  top: 10px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
   border: none;
-  border-radius: 6px;
-  background: var(--color-btn-secondary, #5a64dc);
-  color: white;
-  font-size: 0.75rem;
-  font-weight: 700;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.07);
+  color: #556;
+  font-size: 1.25rem;
+  line-height: 1;
   cursor: pointer;
-  letter-spacing: 0.02em;
-  opacity: 0.8;
-  transition: filter 0.15s, transform 0.1s, opacity 0.1s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.65;
+  transition: opacity 0.15s, background 0.15s;
+  -webkit-tap-highlight-color: transparent;
 }
 
 #btn-wordle-new:active {
-  transform: scale(0.97);
-  filter: brightness(0.9);
   opacity: 1;
+  background: rgba(0, 0, 0, 0.14);
 }

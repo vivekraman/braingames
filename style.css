@@ -531,6 +531,15 @@ main {
   color: #666;
 }
 
+/* ── Word Search game container ── */
+#game-wordsearch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
 /* ── Build label ── */
 #build-label {
   position: fixed;

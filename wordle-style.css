@@ -249,23 +249,25 @@
 #wordle-controls {
   display: flex;
   justify-content: center;
-  margin-top: 12px;
+  margin-top: 8px;
 }
 
 #btn-wordle-new {
-  padding: 10px 28px;
+  padding: 5px 14px;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   background: var(--color-btn-secondary, #5a64dc);
   color: white;
-  font-size: 0.9rem;
+  font-size: 0.75rem;
   font-weight: 700;
   cursor: pointer;
   letter-spacing: 0.02em;
-  transition: filter 0.15s, transform 0.1s;
+  opacity: 0.8;
+  transition: filter 0.15s, transform 0.1s, opacity 0.1s;
 }
 
 #btn-wordle-new:active {
   transform: scale(0.97);
   filter: brightness(0.9);
+  opacity: 1;
 }

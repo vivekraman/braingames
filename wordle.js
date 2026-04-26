@@ -350,6 +350,13 @@ function wordleNewGame() {
     wordleKeyStates = saved.keyStates;
     wordleRestoreBoard();
     wordleRenderKeyboard();
+    for (const [letter, state] of Object.entries(wordleKeyStates)) {
+      const el = wKeyEl(letter);
+      if (el) {
+        el.classList.remove('correct', 'present', 'absent');
+        el.classList.add(state);
+      }
+    }
     if (wordleGameOver) {
       const last = wordleGuesses[wordleGuesses.length - 1];
       const won = last && wordleScore(last, wordleAnswer).every(s => s === 'correct');

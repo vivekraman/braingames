@@ -578,6 +578,7 @@ document.getElementById('btn-play-again').addEventListener('click', () => {
   winOverlay.classList.add('hidden');
   if (activeGame === 'fractions')       fractionsNewGame();
   else if (activeGame === 'homophones') homophonesNewGame();
+  else if (activeGame === 'grammar')    grammarNewGame();
   else                                  newGame(currentCategory);
 });
 
@@ -597,6 +598,7 @@ const gameWordSearchEl  = document.getElementById('game-wordsearch');
 const gameFractionsEl   = document.getElementById('game-fractions');
 const gameHomophonesEl  = document.getElementById('game-homophones');
 const gameWordleEl      = document.getElementById('game-wordle');
+const gameGrammarEl     = document.getElementById('game-grammar');
 const btnHomeEl         = document.getElementById('btn-home');
 
 function showMenu() {
@@ -607,6 +609,7 @@ function showMenu() {
   gameFractionsEl.classList.add('hidden');
   gameHomophonesEl.classList.add('hidden');
   gameWordleEl.classList.add('hidden');
+  gameGrammarEl.classList.add('hidden');
   btnHomeEl.classList.add('hidden');
   timerEl.classList.add('hidden');
   document.body.classList.remove('theme-dark');
@@ -623,10 +626,12 @@ function switchToGame(gameKey) {
   gameFractionsEl.classList.toggle('hidden',   gameKey !== 'fractions');
   gameHomophonesEl.classList.toggle('hidden',  gameKey !== 'homophones');
   gameWordleEl.classList.toggle('hidden',      gameKey !== 'wordle');
+  gameGrammarEl.classList.toggle('hidden',     gameKey !== 'grammar');
   activeGame = gameKey;
   if (gameKey === 'wordsearch')       tryRestoreWordSearch();
   else if (gameKey === 'homophones')  homophonesNewGame();
   else if (gameKey === 'wordle')      wordleNewGame();
+  else if (gameKey === 'grammar')     grammarNewGame();
   else                                fractionsNewGame();
 }
 

@@ -1,4 +1,4 @@
-const CACHE = 'wordsearch-v4';
+const CACHE = 'wordsearch-v5';
 
 // Assets to pre-cache on install (for offline support)
 const PRECACHE_ASSETS = [
@@ -14,6 +14,8 @@ const PRECACHE_ASSETS = [
   './wordle.js',
   './wordle-style.css',
   './wordle-words.js',
+  './grammar.js',
+  './grammar-style.css',
   './manifest.json',
   './icon-192.png',
   './icon-512.png',

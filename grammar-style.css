@@ -1,0 +1,102 @@
+/* ── Grammar Fix-It game layout ── */
+
+#game-grammar {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+#grammar-progress {
+  font-size: 0.9rem;
+  color: #666;
+  font-weight: 600;
+  text-align: center;
+  width: 100%;
+}
+
+/* ── Typed letter paper ── */
+#grammar-letter {
+  width: 100%;
+  background: #fffdf6;
+  border-radius: 4px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  padding: 30px 20px 30px 46px;
+  position: relative;
+  border: 1px solid #e8e2c8;
+}
+
+#grammar-letter::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 30px;
+  bottom: 0;
+  width: 2px;
+  background: #f0c6c6;
+}
+
+#grammar-letter-body {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: clamp(0.92rem, 3.6vw, 1.02rem);
+  line-height: 2;
+  color: #3a352c;
+}
+
+.gram-paragraph {
+  margin-bottom: 16px;
+}
+
+.gram-paragraph:last-child {
+  margin-bottom: 0;
+}
+
+/* ── Tappable words ── */
+.gram-word {
+  cursor: pointer;
+  border-radius: 3px;
+  padding: 1px 2px;
+  transition: background 0.12s;
+}
+
+@media (hover: hover) {
+  .gram-word:hover {
+    background: #efe9d2;
+  }
+}
+
+.gram-word:active {
+  filter: brightness(0.95);
+}
+
+.gram-word.gram-found {
+  background: #d7f3dd;
+  color: #1f6b31;
+  font-weight: 700;
+  text-decoration: underline wavy #4caf74;
+  cursor: default;
+}
+
+@media (hover: hover) {
+  .gram-word.gram-found:hover {
+    background: #d7f3dd;
+  }
+}
+
+.gram-hint {
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 0.78em;
+  font-style: italic;
+  color: #2e7d32;
+  font-weight: 600;
+}
+
+@keyframes gram-miss-flash {
+  0%   { background: var(--color-miss); color: white; }
+  100% { background: transparent; color: inherit; }
+}
+
+.gram-word.gram-miss {
+  animation: gram-miss-flash 0.5s ease-out forwards;
+}

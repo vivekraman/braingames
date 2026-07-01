@@ -25,6 +25,7 @@
   <link rel="stylesheet" href="fractions-style.css">
   <link rel="stylesheet" href="homophones-style.css">
   <link rel="stylesheet" href="wordle-style.css">
+  <link rel="stylesheet" href="grammar-style.css">
 
   <!-- Cloudflare Web Analytics -->
   <script defer src="https://static.cloudflareinsights.com/beacon.min.js"
@@ -71,6 +72,13 @@
         <div>
           <span class="pick-label">Wordle</span>
           <span class="pick-desc">Guess the 4-letter word in 6 tries</span>
+        </div>
+      </button>
+      <button class="game-pick-btn" data-game="grammar">
+        <span class="pick-emoji">✍️</span>
+        <div>
+          <span class="pick-label">Fix the Letter</span>
+          <span class="pick-desc">Tap the words that are spelled or used wrong</span>
         </div>
       </button>
     </div>
@@ -128,6 +136,14 @@
       <div id="homophones-feedback" class="hidden"></div>
     </div>
 
+    <!-- Grammar Fix-It game area -->
+    <div id="game-grammar" class="hidden">
+      <div id="grammar-progress"></div>
+      <div id="grammar-letter">
+        <div id="grammar-letter-body"></div>
+      </div>
+    </div>
+
   </main>
 
   <!-- Category picker modal -->
@@ -150,7 +166,7 @@
     </div>
   </div>
 
-  <div id="build-label">build 7</div>
+  <div id="build-label">build 8</div>
 
   <script src="words.js"></script>
   <script src="script.js"></script>
@@ -158,6 +174,7 @@
   <script src="homophones.js"></script>
   <script src="wordle-words.js"></script>
   <script src="wordle.js"></script>
+  <script src="grammar.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('./sw.js', { updateViaCache: 'none' });

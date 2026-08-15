@@ -1,0 +1,14 @@
+{
+  "name": "braingames",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Browser word and maths games for kids",
+  "license": "ISC",
+  "scripts": {
+    "test": "node --test tests/",
+    "coverage": "node --test --experimental-test-coverage tests/"
+  },
+  "devDependencies": {
+    "jsdom": "^26.1.0"
+  }
+}

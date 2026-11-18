@@ -26,6 +26,7 @@
   <link rel="stylesheet" href="homophones-style.css">
   <link rel="stylesheet" href="wordle-style.css">
   <link rel="stylesheet" href="grammar-style.css">
+  <link rel="stylesheet" href="blockfun-style.css">
 
   <!-- Cloudflare Web Analytics -->
   <script defer src="https://static.cloudflareinsights.com/beacon.min.js"
@@ -81,6 +82,13 @@
           <span class="pick-desc">Tap the words that are spelled or used wrong</span>
         </div>
       </button>
+      <button class="game-pick-btn" data-game="blockfun">
+        <span class="pick-emoji">🧩</span>
+        <div>
+          <span class="pick-label">Block Fun</span>
+          <span class="pick-desc">Fit the pieces and clear rows and columns</span>
+        </div>
+      </button>
     </div>
 
     <!-- Word Search game area -->
@@ -121,6 +129,21 @@
       <div id="wordle-board"></div>
       <div id="wordle-result" class="wordle-result hidden"></div>
       <div id="wordle-keyboard"></div>
+    </div>
+
+    <!-- Block Fun game area -->
+    <div id="game-blockfun" class="hidden">
+      <button id="btn-blockfun-new" title="New game">↺</button>
+      <div id="blockfun-scores">
+        <div class="bf-score-box"><span class="bf-score-label">Score</span><span id="blockfun-score">0</span></div>
+        <div class="bf-score-box"><span class="bf-score-label">Best</span><span id="blockfun-best">0</span></div>
+      </div>
+      <div id="blockfun-board-wrap">
+        <div id="blockfun-board"></div>
+        <div id="blockfun-popup"></div>
+        <div id="blockfun-result" class="hidden"></div>
+      </div>
+      <div id="blockfun-tray"></div>
     </div>
 
     <!-- Homophones game area -->
@@ -166,7 +189,7 @@
     </div>
   </div>
 
-  <div id="build-label">build 8</div>
+  <div id="build-label">build 9</div>
 
   <script src="words.js"></script>
   <script src="script.js"></script>
@@ -175,6 +198,7 @@
   <script src="wordle-words.js"></script>
   <script src="wordle.js"></script>
   <script src="grammar.js"></script>
+  <script src="blockfun.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('./sw.js', { updateViaCache: 'none' });

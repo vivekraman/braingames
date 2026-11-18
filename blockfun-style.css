@@ -1,0 +1,266 @@
+/* ── Block Fun Game Styles ── */
+
+:root {
+  --bf-size: 8;                 /* overwritten from BF_SIZE in blockfun.js */
+  --bf-gap: 3px;
+  --bf-pad: 6px;
+  --bf-board: min(calc(100vw - 32px), 380px);
+  --bf-cell: calc((var(--bf-board) - 2 * var(--bf-pad) - (var(--bf-size) - 1) * var(--bf-gap)) / var(--bf-size));
+}
+
+#game-blockfun {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 10px 16px 20px;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#btn-blockfun-new {
+  position: absolute;
+  top: 10px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.07);
+  color: #334;
+  font-size: 1.2rem;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+#btn-blockfun-new:active {
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.14);
+}
+
+/* ── Scores ── */
+#blockfun-scores {
+  display: flex;
+  gap: 12px;
+}
+
+.bf-score-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 86px;
+  padding: 6px 14px;
+  border-radius: 10px;
+  background: #3a4a7a;
+  color: white;
+}
+
+.bf-score-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+#blockfun-score,
+#blockfun-best {
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+
+/* ── Board ── */
+#blockfun-board-wrap {
+  position: relative;
+}
+
+#blockfun-board {
+  display: grid;
+  grid-template-columns: repeat(var(--bf-size), var(--bf-cell));
+  grid-template-rows: repeat(var(--bf-size), var(--bf-cell));
+  gap: var(--bf-gap);
+  padding: var(--bf-pad);
+  border-radius: 10px;
+  background: #2b3760;
+  touch-action: none;
+}
+
+.bf-cell {
+  position: relative;
+  border-radius: 4px;
+  background: #3a4a7a;
+}
+
+.bf-cell.filled,
+.bf-block {
+  background: var(--c);
+  box-shadow:
+    inset 0 3px 0 rgba(255, 255, 255, 0.35),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.22);
+}
+
+.bf-block {
+  border-radius: 4px;
+}
+
+.bf-cell.preview {
+  background: var(--c);
+  opacity: 0.45;
+}
+
+.bf-cell.will-clear {
+  background: var(--c);
+  opacity: 1;
+  box-shadow: 0 0 0 2px #fff, 0 0 10px 2px rgba(255, 255, 255, 0.6);
+  z-index: 1;
+}
+
+.bf-burst {
+  position: absolute;
+  inset: 0;
+  border-radius: 4px;
+  background: var(--c);
+  animation: bf-burst 0.4s ease-in forwards;
+}
+
+@keyframes bf-burst {
+  0%   { transform: scale(1);   opacity: 1; }
+  40%  { transform: scale(1.15); opacity: 1; filter: brightness(1.6); }
+  100% { transform: scale(0);   opacity: 0; }
+}
+
+/* ── Score popup ── */
+#blockfun-popup {
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+  opacity: 0;
+  z-index: 2;
+}
+
+#blockfun-popup.show {
+  animation: bf-popup 1.1s ease-out forwards;
+}
+
+@keyframes bf-popup {
+  0%   { opacity: 0; transform: translate(-50%, -30%) scale(0.8); }
+  15%  { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+  70%  { opacity: 1; transform: translate(-50%, -60%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -80%) scale(1); }
+}
+
+/* ── Tray ── */
+#blockfun-tray {
+  display: flex;
+  justify-content: space-between;
+  width: var(--bf-board);
+  touch-action: none;
+}
+
+.bf-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(var(--bf-board) / 3 - 4px);
+  height: calc(var(--bf-cell) * 3);
+  border-radius: 10px;
+  background: rgba(58, 74, 122, 0.08);
+  cursor: grab;
+  touch-action: none;
+}
+
+.bf-slot.dragging .bf-piece {
+  opacity: 0;
+}
+
+.bf-slot.no-fit .bf-piece {
+  opacity: 0.35;
+  filter: grayscale(0.7);
+}
+
+.bf-piece {
+  --cell: calc(var(--bf-cell) * 0.5);
+  display: grid;
+  gap: 2px;
+  pointer-events: none;
+}
+
+/* Dragged copy: same size as board cells so it lines up when dropped */
+.bf-ghost {
+  --cell: var(--bf-cell);
+  position: fixed;
+  gap: var(--bf-gap);
+  z-index: 1000;
+  opacity: 0.9;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.35));
+}
+
+/* ── Game over ── */
+#blockfun-result {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: rgba(20, 26, 50, 0.72);
+  z-index: 3;
+  animation: bf-fade-in 0.3s ease-out;
+}
+
+#blockfun-result.hidden {
+  display: none;
+}
+
+@keyframes bf-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.bf-result-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 22px 28px;
+  border-radius: 14px;
+  background: white;
+  color: #334;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.bf-result-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.bf-result-score {
+  font-size: 2.6rem;
+  font-weight: 800;
+  color: #3a4a7a;
+}
+
+.bf-result-best {
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+}
+
+#blockfun-again {
+  padding: 10px 24px;
+  border: none;
+  border-radius: 8px;
+  background: var(--color-btn-primary);
+  color: white;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
